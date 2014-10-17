@@ -6,6 +6,7 @@ __author__ = 'Xavi Mateos <xmateos(at)gmail.com>'
 __license__ = 'GPL'
 __version__ = '0.6.3'
 
+import argparse
 import re
 import mysql.connector
 from mysql.connector import errorcode
@@ -202,7 +203,6 @@ class MySQLServer:
 
                 for col in cols:
                     colName = col[0]
-                    colType = col[1]
                     results = server.findMatches(tableName, primary_keys, colName, searchTerm)
                     for r in results:
                         resultData = {}
@@ -235,15 +235,6 @@ class MySQLServer:
                         else:
                             resultData['matches'][colName] = match
                         resultRowValues.append(resultData)
-
-                """ GROUP RESULTS BY DB
-                print '\n'
-                groupByDatabase = defaultdict(list)
-                for result in resultRowValues:
-                    groupByDatabase[result['db']].append(result['primary_keys'])
-                for g in groupByDatabase:
-                    print groupByDatabase[g]
-                """
 
                 # Get primary keys all matching columns from table
                 groupByTable = defaultdict(list)
@@ -297,16 +288,11 @@ class MySQLServer:
                 colWidths = []
                 for key, value in maxColWidths.iteritems():
                     colWidths.append(value)
-                #tab.set_cols_align(['l', 'r', 'c'])
-                #tab.set_cols_valign(['t', 'b', 'm'])
-                #tab.set_deco(tab.HEADER | tab.VLINES)
-                #tab.set_chars(['-', '|', '+', '#'])
                 if len(resultRowValues) > 0:
                     tab.set_cols_width(colWidths)
                     print '\nTABLE ---->>> ' + dbName + '.' + tableName
                     t = tab.draw()
                     print t
-
 
 if consoleMode:
     # Request console search term input
