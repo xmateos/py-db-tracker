@@ -6,7 +6,6 @@ __author__ = 'Xavi Mateos <xmateos(at)gmail.com>'
 __license__ = 'GPL'
 __version__ = '0.6.3'
 
-import argparse
 import re
 import mysql.connector
 from mysql.connector import errorcode
